@@ -9,7 +9,11 @@ class PostsController < ApplicationController
   end
 
   def show
-
+    if params[:author_id]
+      @post = Author.find(params[:author_id]).posts.find(params[:id])
+    else
+      @post = Post.find(params[:id])
+    end
   end
 
   def new
@@ -17,7 +21,7 @@ class PostsController < ApplicationController
       redirect_to authors_path, alert: "Author not found."
     else
       @post = Post.new(author_id: params[:author_id])
-    end 
+    end
   end
 
   def create
